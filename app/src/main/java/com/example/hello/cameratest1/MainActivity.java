@@ -16,6 +16,9 @@ import android.net.Uri;
 import android.os.Environment;
 import android.os.Environment;
 
+import android.graphics.BitmapFactory;
+import android.graphics.Bitmap;
+import android.widget.ImageView;
 
 public class MainActivity extends Activity {
     private Button dissubmit=null;
@@ -24,13 +27,14 @@ public class MainActivity extends Activity {
     private static final String FN = "photo.jpg";
     private static String path="";
 
-
+    private  ImageView img = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         dissubmit = (Button)super.findViewById(R.id.button);
         submit = (Button)super.findViewById(R.id.button2);
+        img = (ImageView)findViewById(R.id.imageView);
         dissubmit.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,7 +68,13 @@ public class MainActivity extends Activity {
             }
         });
     }
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if( requestCode == 1 && resultCode == RESULT_OK){
+            Bitmap aa = BitmapFactory.decodeFile(path);
+            img.setImageBitmap(aa);
+        }
 
 
     }
