@@ -50,13 +50,19 @@ public class MainActivity extends Activity {
                     Toast.makeText(getApplicationContext(),"读取失败,SD存储卡不存在!",Toast.LENGTH_LONG).show();
                     return;
                 }
-                path = Environment.getExternalStorageState().toString()+File.separator+
-                        "hehe"+File.separator+FN;
+                path = Environment.getExternalStorageDirectory().toString()+File.separator+
+                        "heheda"+File.separator+FN;
                 message=new File(path);
+
+                if(!message.exists()){
+                    if(!message.getParentFile().exists()){
+                        message.getParentFile().mkdirs();
+                    }
+                }
                 /*if(!message.exists()){
                     File vpath=message.getParentFile();
                     vpath.mkdir();
-                    Toast.makeText(getApplicationContext(),"文件不存在!!",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),path+"文件不存在!!",Toast.LENGTH_LONG).show();
                     return;
                 }*/
                 Uri uri=Uri.fromFile(message);
@@ -73,6 +79,7 @@ public class MainActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
         if( requestCode == 1 && resultCode == RESULT_OK){
             Bitmap aa = BitmapFactory.decodeFile(path);
+            Toast.makeText(getApplicationContext(), path+"", Toast.LENGTH_SHORT).show();
             img.setImageBitmap(aa);
         }
 
